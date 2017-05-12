@@ -1,4 +1,5 @@
 let mapleader=","
+let g:mapleader=","
 
 set rtp+=~/.vim/bundle/Vundle.vim/
 call vundle#rc()
@@ -44,7 +45,7 @@ map <C-j> <C-W>j
 map <C-k> <C-W>k
 map <C-h> <C-W>h
 map <C-l> <C-W>l
-
+map <alt-l> <C-W>l
 
 syntax enable
 set t_Co=256
@@ -52,35 +53,51 @@ set t_Co=256
 "set background=dark
 "colorscheme solarized
 "let g:solarized_termcolors=256
+colorscheme Tomorrow-Night-Eighties
 set number
 set helplang=cn
 set ai      
 set bs=2
 set showmatch
 set autoread
-set autoindent
 
 :filetype plugin indent on
 
 set ts=4
+set smartindent
+set shiftwidth=4
+set softtabstop=4
+set smarttab
 set expandtab
+set shiftround
+
 
 set syntax =on
+set autoindent
 set cindent
 
 set cursorline
 set hls
+set showmode
+
+map <Left> <Nop>
+map <Right> <Nop>
+map <Up> <Nop>
+map <Down> <Nop>
+
 
 set fencs=utf-8,gbk
 set encoding=utf-8
 set fileencodings=utf-8,ucs-bom,gb18030,gbk,gb2312,cp936,latin1
 set termencoding=utf-8
 
-inoremap ' ''<ESC>i
-inoremap " ""<ESC>i
-inoremap ( ()<ESC>i
-inoremap [ []<ESC>i
-inoremap { {<CR>}<ESC>O
+
+
+:autocmd FileType c,cpp inoremap ' ''<ESC>i
+:autocmd FileType c,cpp inoremap " ""<ESC>i
+:autocmd FileType c,cpp inoremap ( ()<ESC>i
+:autocmd FileType c,cpp inoremap [ []<ESC>i
+:autocmd FileType c,cpp inoremap { {<CR>}<ESC>O
 
 func SkipPair()
     if getline('.')[col('.') - 1] == ')' || getline('.')[col('.') - 1] == ']' || getline('.')[col('.') - 1] == '"' || getline('.')[col('.') - 1] == "'" || getline('.')[col('.') - 1] == '}'
