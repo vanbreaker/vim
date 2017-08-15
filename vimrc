@@ -34,11 +34,43 @@ let g:ycm_confirm_extra_conf=1
 nnoremap <leader>gl :YcmCompleter GoToDeclaration<CR>
 nnoremap <leader>gf :YcmCompleter GoToDefinition<CR>
 nnoremap <leader>gg :YcmCompleter GoToDefinitionElseDeclaration<CR>
-" 最小自动触发补全的字符大小设置为 3 
-"let g:ycm_min_num_of_chars_for_completion = 3 
-" YCM的previw窗口比较恼人，还是关闭比较好 
 set completeopt-=preview 
 
+Bundle 'Lokaltog/vim-easymotion'
+let g:EasyMotion_smartcase = 1
+let g:EasyMotion_startofline = 0 " keep cursor colum when JK motion
+map <Leader>e <Plug>(easymotion-bd-e)
+map <Leader>w <Plug>(easymotion-bd-w)
+map <Leader>h <Plug>(easymotion-linebackward)
+map <Leader>j <Plug>(easymotion-j)
+map <Leader>k <Plug>(easymotion-k)
+map <Leader>l <Plug>(easymotion-lineforward)
+map <Leader>. <Plug>(easymotion-repeat)
+map <Leader>f <Plug>(easymotion-s)
+map <Leader>s <Plug>(easymotion-f)
+
+
+Bundle 'vim-scripts/a.vim'
+Bundle 'scrooloose/nerdcommenter'
+
+Bundle 'scrooloose/nerdtree'
+map <C-n> :NERDTreeToggle<CR>
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
+Bundle 'vim-syntastic/syntastic'
+set statusline+=%#warningmsg#
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
+Bundle 'junegunn/vim-easy-align'
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
 
 
 map <C-j> <C-W>j
@@ -93,11 +125,11 @@ set termencoding=utf-8
 
 
 
-:autocmd FileType c,cpp inoremap ' ''<ESC>i
-:autocmd FileType c,cpp inoremap " ""<ESC>i
-:autocmd FileType c,cpp inoremap ( ()<ESC>i
-:autocmd FileType c,cpp inoremap [ []<ESC>i
-:autocmd FileType c,cpp inoremap { {<CR>}<ESC>O
+inoremap ' ''<ESC>i
+inoremap " ""<ESC>i
+inoremap ( ()<ESC>i
+inoremap [ []<ESC>i
+inoremap { {<CR>}<ESC>O
 
 func SkipPair()
     if getline('.')[col('.') - 1] == ')' || getline('.')[col('.') - 1] == ']' || getline('.')[col('.') - 1] == '"' || getline('.')[col('.') - 1] == "'" || getline('.')[col('.') - 1] == '}'
