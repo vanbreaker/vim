@@ -1,7 +1,7 @@
 let mapleader=","
 let g:mapleader=","
 
-set rtp+=~/.vim/bundle/Vundle.vim/
+set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 Bundle 'gmarik/vundle'
 Bundle 'majutsushi/tagbar'
@@ -24,6 +24,7 @@ Bundle 'Valloric/YouCompleteMe'
 " 设置跳转到方法/函数定义的快捷键 
 "nnoremap <leader>j :YcmCompleter GoToDefinitionElseDeclaration<CR> 
 " 触发补全快捷键 
+let g:ycm_server_python_interpreter = '/usr/bin/python'
 let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/.ycm_extra_conf.py'
 let g:ycm_key_list_select_completion = ['<TAB>', '<c-n>', '<Down>'] 
 let g:ycm_key_list_previous_completion = ['<S-TAB>', '<c-p>', '<Up>'] 
@@ -60,17 +61,42 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 Bundle 'vim-syntastic/syntastic'
 set statusline+=%#warningmsg#
 set statusline+=%*
-
+set statusline+=%#warningmsg#
+set statusline+=%*
 let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
+let g:syntastic_auto_loc_list            = 1
+let g:syntastic_check_on_open            = 1
+let g:syntastic_check_on_wq              = 0
+let g:syntastic_go_checkers = ['golint', 'go', 'gofmt']
+
 
 Bundle 'junegunn/vim-easy-align'
 " Start interactive EasyAlign in visual mode (e.g. vipga)
 xmap ga <Plug>(EasyAlign)
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
+
+
+Bundle 'fatih/vim-go'
+function! s:build_go_files()
+    let l:file = expand('%')
+    if l:file =~# '^\f\+_test\.go$'
+        call go#test#Test(0, 1)
+    elseif l:file =~# '^\f\+\.go$'
+        call go#cmd#Build(0)
+    endif
+endfunction
+map <C-n> :cnext<CR>
+map <C-m> :cprevious<CR>
+nnoremap <leader>a :cclose<CR>
+autocmd FileType go nmap <leader>b  <Plug>(go-build)
+autocmd FileType go nmap <leader>r  <Plug>(go-run)
+autocmd FileType go nmap <leader>b :<C-u>call <SID>build_go_files()<CR>)
+let g:go_fmt_fail_silently   = 1
+let g:go_highlight_types = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
 
 
 map <C-j> <C-W>j
@@ -93,7 +119,8 @@ set bs=2
 set showmatch
 set autoread
 
-:filetype plugin indent on
+filetype plugin indent on
+filetype plugin on
 
 set ts=4
 set smartindent
